@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="./Module/components/components.css">
+  <link rel="stylesheet" href="./Module/charts/charts.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <title>ESG Dashboard</title>
+</head>
+
+<body>
+  <div class="container" id="container">
+    <!-- Navbar -->
+    <div class="navbar">
+      <a href="#" class="comp hori">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Wikimedia-logo.png" alt="" class="logo" />
+        <h2 class="company-name">Company Name</h2>
+      </a href="#">
+      <div class="menu">
+        <a href="#" class="link">Home</a>
+        <a href="#" class="link active">ESG Dashboard</a>
+        <a href="#" class="link">Admin Panel</a>
+      </div>
+      <div class="right-menu">
+        <button class="refresh hori">
+          <i class="fa-solid fa-arrows-rotate"></i>
+          <p class="ref">Refresh Data</p>
+        </button>
+        <a href="#" class="link bell"><i class="fa-solid fa-bell"></i></a>
+        <div class="admin hori">
+          <div class="adm-img">
+            <img src="https://cdn-icons-png.freepik.com/256/12236/12236621.png?semt=ais_hybrid" alt=""
+              class="admin-img" />
+          </div>
+          <p class="adm">Admin</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Section -->
+    <div class="main-section">
+      <div class="left-sidebar">
+        <div class="ls-top">
+          <button class="close-btn-box">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <div class="user-profile">
+            <div class="profile-pic">
+              <img src="https://cdn-icons-png.flaticon.com/512/9159/9159750.png" alt="" class="profile-img">
+            </div>
+            <p class="admin-name">Admin Name</p>
+            <p class="admin-profession">ESG Administrator</p>
+          </div>
+          <a href="#" class="profile-setting">
+            <i class="fa-solid fa-gear"></i>
+            <p class="set">Profile Settings</p>
+          </a>
+          <a href="#" class="profile-setting">
+            <i class="fa-solid fa-bell"></i>
+            <p class="set">Notification Settings</p>
+          </a>
+          <a href="#" class="profile-setting">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <p class="set">Alerts</p>
+          </a>
+        </div>
+
+        <div class="ls-bottom">
+          <p class="report">Report</p>
+          <div class="report-opt">
+            <a href="#" class="reports profile-setting">
+              <span class="icon">📝</span>
+              <p class="monthly set">Monthly Report</p>
+            </a>
+            <a href="#" class="reports profile-setting">
+              <span class="icon">📈</span>
+              <p class="monthly set">Yearly Report</p>
+            </a>
+            <a href="#" class="reports profile-setting">
+              <span class="icon">🔍</span>
+              <p class="monthly set">Audit Result</p>
+            </a>
+          </div>
+        </div>
+
+        <button class="report-down">
+          <i class="fa-solid fa-download"></i>
+          Download full Report
+        </button>
+
+        <button class="theme">
+          <div class="dark-theme" id="dark-theme">
+            <i class="fa-solid fa-circle-half-stroke"></i>
+            Dark
+          </div>
+          <div class="light-theme" id="light-theme">
+            <i class="fa-regular fa-lightbulb"></i>
+            Light
+          </div>
+        </button>
+
+        <button class="logout">
+          Logout
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+
+      <div class="main-right">
+        <div class="mr-top">
+          <div class="mrt-left">
+            <div class="mrtl-heading">
+              <p class="esg-cat">ESG Category Distribution</p>
+            </div>
+            <!-- <div id="bar-chart"></div> -->
+            <canvas id="myChart"></canvas>
+          </div>
+
+          <div class="mrt-right">
+            <div class="mrtr-heading">
+              <p class="trend"> ESG Performance Trends – <span id="trend-year">2024</span></p>
+
+            </div>
+            <div id="line-chart"></div>
+          </div>
+
+          <div class="mrt-middle">
+            <div class="mrtr-heading">
+              <p class="trend">ESG Scores Across Indian States</p>
+            </div>
+            <!-- <div id="geo-chart"></div> -->
+            <div id="chart_div"></div>
+            <!-- <div id="legand">
+              <div class="legand-item">
+                <div class="legand-box low"></div>
+                Low ESG Score
+              </div>
+              <div class="legand-item">
+                <div class="legand-box medium"></div>
+                Medium ESG Score
+              </div>
+              <div class="legand-item">
+                <div class="legand-box high"></div>
+                High ESG Score
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <!-- <div class="mr-middle dashboard-container">
+          <h3 class="components">Components of ESG</h3>
+
+          <div class="tabs">
+            <div class="tab active" data-category="ALL">ALL</div>
+            <div class="tab env" data-category="ENVIRONMENTAL">ENVIRONMENTAL</div>
+            <div class="tab soc" data-category="SOCIAL">SOCIAL</div>
+            <div class="tab gov" data-category="GOVERNANCE">GOVERNANCE</div>
+          </div>
+
+          <div class="grid" id="components-grid"></div>
+
+          <div class="legend">
+            <span><span class="color-box poor"></span>Below 60%: Poor Performance</span>
+            <span><span class="color-box average"></span>60%-79%: Average Performance</span>
+            <span><span class="color-box good"></span>80% and Above: Good Performance</span>
+          </div>
+        </div>
+
+
+        <div id="modal" class="modal">
+          <div class="modal-content">
+            <div id="modal-header" class="modal-header">
+              <button class="close-btn" id="close-btn">&times;</button>
+              <h2 id="modal-title" class="modal-title"></h2>
+              <div id="modal-category" class="modal-category"></div>
+            </div>
+            <div class="modal-body">
+              <div id="score-section" class="score-section">
+                <div class="score-info">
+                  <h3>Current Score</h3>
+                  <span id="modal-weight" class="weight-badge"></span>
+                </div>
+                <div id="modal-score" class="score-value"></div>
+              </div>
+
+              <div class="metrics-grid">
+                <div class="metric-card">
+                  <div class="metric-label">Trend (YoY)</div>
+                  <div id="modal-trend" class="metric-value"></div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Benchmark</div>
+                  <div id="modal-benchmark" class="metric-value"></div>
+                </div>
+              </div>
+
+              <div id="performance-indicator" class="performance-indicator">
+                <div class="status-icon"></div>
+                <span id="performance-text"></span>
+              </div>
+
+              <div class="description-section">
+                <h4>Description & Impact</h4>
+                <p id="modal-description" class="description-text"></p>
+                <p id="modal-details" class="description-text"></p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+        <div class="mr-middle dashboard-container">
+          <!-- Dashboard Header -->
+          <h3 class="components">Components of ESG</h3>
+
+          <!-- Tab Navigation -->
+          <div class="tabs">
+            <div class="tab active" data-category="ALL">ALL</div>
+            <div class="tab env" data-category="ENVIRONMENTAL">ENVIRONMENTAL</div>
+            <div class="tab soc" data-category="SOCIAL">SOCIAL</div>
+            <div class="tab gov" data-category="GOVERNANCE">GOVERNANCE</div>
+          </div>
+
+          <!-- Components Grid - This will be populated by JavaScript -->
+          <div class="grid" id="components-grid">
+            <!-- Component cards will be dynamically inserted here -->
+          </div>
+
+          <!-- Performance Legend -->
+          <div class="legend">
+            <span>
+              <span class="color-box poor"></span>
+              Below 60%: Poor Performance
+            </span>
+            <span>
+              <span class="color-box average"></span>
+              60%-79%: Average Performance
+            </span>
+            <span>
+              <span class="color-box good"></span>
+              80% and Above: Good Performance
+            </span>
+          </div>
+        </div>
+
+        <!-- Modal for Component Details -->
+        <div id="modal" class="modal">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div id="modal-header" class="modal-header">
+              <button class="close-btn" id="close-btn" aria-label="Close Modal">&times;</button>
+              <h2 id="modal-title" class="modal-title"></h2>
+              <div id="modal-category" class="modal-category"></div>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+              <!-- Score Section -->
+              <div id="score-section" class="score-section">
+                <div class="score-info">
+                  <h3>Current Score</h3>
+                  <span id="modal-weight" class="weight-badge"></span>
+                </div>
+                <div id="modal-score" class="score-value"></div>
+              </div>
+
+              <!-- Metrics Grid -->
+              <div class="metrics-grid">
+                <div class="metric-card">
+                  <div class="metric-label">Trend (YoY)</div>
+                  <div id="modal-trend" class="metric-value"></div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Benchmark</div>
+                  <div id="modal-benchmark" class="metric-value"></div>
+                </div>
+              </div>
+
+              <!-- Performance Indicator -->
+              <div id="performance-indicator" class="performance-indicator">
+                <div class="status-icon"></div>
+                <span id="performance-text"></span>
+              </div>
+
+              <!-- Description Section -->
+              <div class="description-section">
+                <h4>Description & Impact</h4>
+                <p id="modal-description" class="description-text"></p>
+                <p id="modal-details" class="description-text"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="mr-bottom">
+          <div class="mrb-left">
+            <div class="mrtl-heading">
+              <p class="esg-cat">ESG Score Comparision</p>
+            </div>
+            <div id="chart"></div>
+          </div>
+
+
+          <div class="mrb-right">
+            <div class="mrtl-heading">
+              <p class="esg-cat">ESG Risk Analysis</p>
+            </div>
+            <div class="over">
+              <div id="overall_gauge" style="margin: auto;"></div>
+              <p class="envir">Overall ESG</p>
+            </div>
+
+            <div id="bottom_gauges">
+              <div class="gauge-box">
+                <div id="gauge_env"></div>
+                <p class="envir">Environmental</p>
+              </div>
+              <div class="gauge-box">
+                <div id="gauge_soc"></div>
+                <p class="envir">Social</p>
+              </div>
+              <div class="gauge-box">
+                <div id="gauge_gov"></div>
+                <p class="envir">Governance</p>
+              </div>
+            </div>
+
+            <div class="risk-legend">
+              <span>
+                <div class="risk-color-box green"></div>Low Risk (0–50)
+              </span>
+              <span>
+                <div class="risk-color-box yellow"></div>Medium Risk (50–75)
+              </span>
+              <span>
+                <div class="risk-color-box red"></div>High Risk (75–100)
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Apexchart -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.5.0/apexcharts.min.js"
+    integrity="sha512-yMnvLee1a5S9nemgCoMth5YvOchnQMFMOSao/bH6SLAXZnauuHs1gd92DnE9+sVQ5aglei3LZDelg8LauSlWkw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+    integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+  <!-- <script src="dashboard.js"></script> -->
+  <script src="./Module/charts/charts.js"></script>
+  <script src="./Module/barComparision/comparision.js"></script>
+  <script src="./Module//riskChart/risk.js"></script>
+  <script type="module" src="Module/main.js"></script>
+  <script type="module" src="./Module/index.js"></script>
+
+</body>
+
+</html>
